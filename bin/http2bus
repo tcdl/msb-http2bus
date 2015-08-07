@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+
+require('../lib/http2bus/cli').start();
