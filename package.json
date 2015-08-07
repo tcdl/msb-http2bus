@@ -1,0 +1,43 @@
+{
+  "name": "msb-http2bus",
+  "version": "0.6.0",
+  "description": "Provides HTTP endpoints for services exposed through the bus.",
+  "main": "app.js",
+  "scripts": {
+    "npmrc": "printf \"_auth = $NPM_AUTH_TOKEN\nemail = $NPM_EMAIL\n\" > .npmrc",
+    "test": "npm run test-no-publish && if [ -n \"${TRAVIS_TAG}\" ]; then npm run npmrc && npm publish; fi",
+    "test-no-publish": "lab -t 60",
+    "test-watch": "nodemon node_modules/lab/bin/lab -cv -t 60",
+    "cs": "jscs **/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tcdl/msb-http2bus.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tcdl/msb-http2bus/issues"
+  },
+  "homepage": "https://github.com/tcdl/msb-http2bus",
+  "devDependencies": {
+    "code": "^1.5.0",
+    "jscs": "^2.0.0",
+    "lab": "^5.15.0",
+    "nodemon": "^1.4.0",
+    "simple-mock": "^0.3.1"
+  },
+  "dependencies": {
+    "cors": "^2.7.1",
+    "debug": "^2.2.0",
+    "finalhandler": "^0.4.0",
+    "lodash": "^3.10.1",
+    "minimist": "^1.1.3",
+    "msb": ">=0.8.0 <1",
+    "parseurl": "^1.3.0",
+    "raw-body": "^2.1.2",
+    "router": "^1.1.3"
+  },
+  "bin": {
+    "http2bus": "./bin/http2bus"
+  }
+}
