@@ -13,9 +13,11 @@ var afterEach = lab.afterEach;
 var expect = Code.expect;
 
 /* Modules */
+var http = require('http');
 var simple = require('simple-mock');
 var msb = require('msb');
 var app = require('../app');
+var routerWrapper = require('../lib/routerWrapper');
 
 describe('http2bus.app', function() {
   afterEach(function(done) {
@@ -25,16 +27,40 @@ describe('http2bus.app', function() {
 
   describe('start()', function() {
     it('should create server and listen', function(done) {
+      var mockRouterWrapper = {
+        load: simple.mock(),
+        middleware: simple.mock()
+      };
 
-      var mockServer = {};
-      simple.mock(mockServer, 'listen').returnWith(mockServer);
-      simple.mock(mockServer, 'once').callback().inThisContext(mockServer);
-      simple.mock(mockServer, 'address').returnWith({ port: 99999 });
-      simple.mock(app, 'server', mockServer);
+      simple.mock(routerWrapper, 'RouterWrapper').returnWith(mockRouterWrapper);
+
+      var mockServer = {
+        listen: simple.mock(),
+        once: simple.mock(),
+        address: simple.mock()
+      };
+
+      mockServer.listen.returnWith(mockServer);
+      mockServer.once.callback().inThisContext(mockServer);
+      mockServer.address.returnWith({ port: 99999 });
+
+      simple.mock(http, 'createServer').returnWith(mockServer);
 
       app.start(function() {
 
+        expect(http.createServer.callCount).equals(1);
+        expect(http.createServer.lastCall.arg).exists();
+
         expect(mockServer.listen.called).true();
+
+        http.createServer.lastCall.arg('a', 'b');
+
+        expect(mockRouterWrapper.middleware.callCount).equals(1);
+        expect(mockRouterWrapper.middleware.lastCall.args[0]).equals('a');
+        expect(mockRouterWrapper.middleware.lastCall.args[1]).equals('b');
+        expect(typeof mockRouterWrapper.middleware.lastCall.args[2]).equals('function');
+
+
 
         done();
       });
