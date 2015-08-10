@@ -49,7 +49,7 @@ describe('routesProvider.agent', function() {
         } catch(e) {
           err = e;
         }
-        done(err);
+
         expect(err).exists();
         done();
       });
