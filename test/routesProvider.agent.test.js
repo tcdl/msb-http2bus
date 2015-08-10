@@ -44,7 +44,7 @@ describe('routesProvider.agent', function() {
         var err;
         try {
           agent.load([
-            { bus: {}, http: {} }
+            { bus: { namespace: '' }, http: {} }
           ]);
         } catch(e) {
           err = e;
@@ -54,6 +54,57 @@ describe('routesProvider.agent', function() {
         done();
       });
 
+      it('should load routes onto agent and do a broadcast', function(done) {
+        simple.mock(agent, 'doBroadcast').returnWith();
+
+        var returned = agent.load([
+          {
+            provider: {
+              name: 'hierarchy'
+            },
+            http: {
+              basePath: '/sub-api'
+            }
+          },
+
+          {
+            bus: {
+              namespace: 'zzz:111',
+              tags: ['abcdefg', 'kkk']
+            },
+            http: {
+              path: '*'
+            }
+          },
+
+          {
+            bus: {
+              namespace: 'zzz:112',
+              tags: ['mmm']
+            },
+            http: {
+              path: '*'
+            }
+          },
+
+          {
+            bus: {
+              namespace: 'zzz:113'
+            },
+            http: {
+              path: '*'
+            }
+          }
+        ]);
+
+        expect(returned).equals(agent);
+        expect(returned.doc.versionHash).equals('14186016000007031128c41cc6409babfdbcb4c02b5a4');
+        expect(returned.doc.routes[1].bus.tags).deep.equals(['abcdefg', 'kkk']);
+        expect(returned.doc.routes[2].bus.tags).deep.equals(['mmm', 'abcdefg']);
+        expect(returned.doc.routes[3].bus.tags).deep.equals(['abcdefg']);
+
+        done();
+      });
 
 
     });
