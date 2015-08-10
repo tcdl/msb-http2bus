@@ -1,6 +1,6 @@
 {
   "name": "msb-http2bus",
-  "version": "0.6.1",
+  "version": "0.7.0-0",
   "description": "Provides HTTP endpoints for services exposed through the bus.",
   "main": "app.js",
   "scripts": {
