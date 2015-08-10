@@ -30,8 +30,10 @@ app.createServer = function() {
 };
 
 app.createRoutesProviderAgent = function(config) {
-  return require('./lib/routesProvider/agent')
+  var agent = require('./lib/routesProvider/agent')
     .create(config)
-    .load(config.routes)
-    .start();
+    .load(config.routes);
+
+  agent.start();
+  return agent;
 };
