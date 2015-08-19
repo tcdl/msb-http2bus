@@ -29,11 +29,12 @@ app.createServer = function() {
   });
 };
 
-app.createRoutesProviderAgent = function(config) {
-  var agent = require('./lib/routesProvider/agent')
-    .create(config)
-    .load(config.routes);
+app.routesAgent = require('./lib/routesProvider/agent');
 
+app.createRoutesProviderAgent = function(config) {
+  var agent = app.routesAgent.create(config);
+
+  agent.load(config.routes);
   agent.start();
   return agent;
 };
