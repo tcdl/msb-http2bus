@@ -1,7 +1,7 @@
 {
   "name": "msb-http2bus",
-  "version": "0.7.0-3",
-  "description": "Provides HTTP endpoints for services exposed through the bus.",
+  "version": "0.7.0",
+  "description": "An HTTP server providing endpoints for services exposed through the MSB bus.",
   "main": "app.js",
   "scripts": {
     "npmrc": "printf \"_auth = $NPM_AUTH_TOKEN\nemail = $NPM_EMAIL\n\" > .npmrc",
