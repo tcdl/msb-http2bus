@@ -5,6 +5,8 @@ var app = exports;
 app.config = require('./lib/config');
 
 app.start = function(cb) {
+  if (app.config.channelMonitorEnabled) msb.channelMonitorAgent.start();
+
   var RouterWrapper = require('./lib/routerWrapper').RouterWrapper;
   app.router = new RouterWrapper();
 
