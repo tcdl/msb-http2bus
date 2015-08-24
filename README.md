@@ -40,6 +40,7 @@ Routes are loaded as an array of configuration objects, always specifying an `ht
 - **http.path** String An [Express-style path](https://github.com/pillarjs/path-to-regexp#usage) to listen on.
 - **http.basePath** _Optional_ URLs and redirects are relative to this path. (Default: '/')
 - **http.methods** _Optional_ Array The HTTP methods to listen for, e.g. `get`, `post`, `put`, `head`. (Default: `['get']`)
+- **http.remote** _Optional_ Boolean Route all traffic below this path, for no specific HTTP methods, to a remote router.  (Default: `false`)
 - **http.cors** _Optional_ Object CORS middleware [configuration options](https://github.com/expressjs/cors#configuration-options).
 - **bus** Object Must be a valid [Requester configuration](https://github.com/tcdl/msb#class-msbrequester).
 - **provider** Object Dynamic routes can provided by this provider.

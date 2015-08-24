@@ -6,8 +6,8 @@
   "scripts": {
     "npmrc": "printf \"_auth = $NPM_AUTH_TOKEN\nemail = $NPM_EMAIL\n\" > .npmrc",
     "test": "npm run test-no-publish && if [ -n \"${TRAVIS_TAG}\" ]; then npm run npmrc && npm publish; fi",
-    "test-no-publish": "lab -t 60",
-    "test-watch": "nodemon node_modules/lab/bin/lab -cv -t 60",
+    "test-no-publish": "lab -t 90",
+    "test-watch": "nodemon node_modules/lab/bin/lab -cv -t 90",
     "cs": "jscs **/*.js"
   },
   "repository": {
