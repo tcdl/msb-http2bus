@@ -68,6 +68,9 @@ module.exports = {
                   enum: ['head', 'get', 'put', 'post', 'delete', 'options']
                 }
               },
+              remote: {
+                type: 'boolean'
+              },
               path: {
                 type: 'string'
               },
