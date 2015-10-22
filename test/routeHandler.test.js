@@ -245,6 +245,8 @@ describe('routeHandler()', function() {
         done();
       });
 
+      it()
+
       describe('if no responses were received', function() {
         it('will return an empty 503 where responses are expected', function(done) {
           handler(mockReq, mockRes, mockNext);
@@ -281,6 +283,26 @@ describe('routeHandler()', function() {
 
           done();
         });
+
+        it('will return a correlationId in the header', function(done) {
+          handler(mockReq, mockRes, mockNext);
+
+          mockRequester.message.correlationId = 'aCorrelationId';
+
+          expect(mockRequester.once.lastCall.arg).equal('end');
+
+          var end = mockRequester.once.lastCall.args[1];
+          expect(end).exist();
+
+          end();
+
+          expect(mockRes.setHeader.callCount).equals(1);
+          expect(mockRes.setHeader.lastCall.arg).equals('x-msb-correlation-id');
+          expect(mockRes.setHeader.lastCall.args[1]).equals('aCorrelationId');
+
+          done();
+        });
+
       });
 
       describe('where responses were received', function() {
@@ -300,6 +322,25 @@ describe('routeHandler()', function() {
           };
 
           mockRequester.responseMessages.push(responseMessage);
+          done();
+        });
+
+        it('will return a correlationId in the header', function(done) {
+          handler(mockReq, mockRes, mockNext);
+
+          mockRequester.message.correlationId = 'aCorrelationId';
+
+          expect(mockRequester.once.lastCall.arg).equals('end');
+
+          var end = mockRequester.once.lastCall.args[1];
+          expect(end).exists();
+
+          end();
+
+          expect(mockRes.setHeader.callCount).equals(1);
+          expect(mockRes.setHeader.lastCall.arg).equals('x-msb-correlation-id');
+          expect(mockRes.setHeader.lastCall.args[1]).equals('aCorrelationId');
+
           done();
         });
 
